@@ -1,30 +1,44 @@
-import dbConnect from '../../../utils/dbConnect';
-import Mission from '../../../models/Mission';
+import { useState, useEffect } from 'react';
+import Head from 'next/head';
+import MissionList from '../components/MissionList';
 
-export default async function handler(req, res) {
-  const { method } = req;
+export default function Home() {
+  const [missions, setMissions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  await dbConnect();
-
-  switch (method) {
-    case 'GET':
+  useEffect(() => {
+    const fetchMissions = async () => {
       try {
-        const missions = await Mission.find({});
-        res.status(200).json({ success: true, data: missions });
+        const res = await fetch('/api/missions');
+        const data = await res.json();
+        if (data.success) {
+          setMissions(data.data);
+        }
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.error('Error fetching missions:', error);
+      } finally {
+        setLoading(false);
       }
-      break;
-    case 'POST':
-      try {
-        const mission = await Mission.create(req.body);
-        res.status(201).json({ success: true, data: mission });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
-    default:
-      res.status(400).json({ success: false });
-      break;
-  }
+    };
+
+    fetchMissions();
+  }, []);
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Head>
+        <title>SpaceMission Tracker</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <main>
+        <h1 className="text-3xl font-bold mb-8">SpaceMission Tracker</h1>
+        {loading ? (
+          <p>Loading missions...</p>
+        ) : (
+          <MissionList missions={missions} />
+        )}
+      </main>
+    </div>
+  );
 }
