@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
@@ -33,19 +32,23 @@ export default function AddMission() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100">
       <Head>
         <title>Add New Mission - SpaceMission Tracker</title>
       </Head>
 
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Add New Mission</h1>
-        <Link href="/" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-          Back to Missions
-        </Link>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-indigo-800">Add New Mission</h1>
+          <Link href="/" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">
+            Back to Missions
+          </Link>
+        </div>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <MissionForm onSubmit={handleSubmit} />
+        </div>
       </div>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <MissionForm onSubmit={handleSubmit} />
     </div>
   );
 }

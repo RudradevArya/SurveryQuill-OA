@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SurveyQuill OA
 
-## Getting Started
+## Task List
 
-First, run the development server:
+- [x] Set up Next.js project
+- [x] Create MongoDB connection utility
+- [x] Implement Mission model
+- [x] Create API routes for CRUD operations
+- [x] Implement home page with mission list
+- [x] Create "Add Mission" page and form
+- [x] Implement "Edit Mission" functionality
+- [x] Add "Delete Mission" feature
+- [ ] Implement user authentication
+- [ ] Add pagination for mission list
+- [ ] Implement search functionality
+- [ ] Add unit tests
+- [x] Set up continuous integration
+- [x] Deploy to production
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Problem statement
+
+Create a CRUD application in MERN stack and NextJs and deploy on vercel
+
+
+## Folder Structure
+
+```
+└── 📁surveyquill
+    └── 📁.git    
+    └── 📁public
+    └── 📁src
+        └── 📁app
+            └── 📁fonts
+                └── GeistMonoVF.woff
+                └── GeistVF.woff
+            └── favicon.ico
+            └── globals.css
+            └── layout.tsx
+        └── 📁components
+            └── MissionForm.js
+            └── MissionList.js
+        └── 📁models
+            └── Mission.js
+        └── 📁pages
+            └── 📁api
+                └── 📁missions
+                    └── [id].js
+                    └── index.js
+            └── 📁mission
+                └── [id].js
+            └── add-mission.js
+            └── index.js
+        └── 📁styles
+        └── 📁utils
+            └── dbConnect.js
+    └── .env.local
+    └── .eslintrc.json
+    └── .gitignore
+    └── package-lock.json
+    └── README.md
+    └── tsconfig.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   `https://github.com/RudradevArya/SurveryQuill-OA.git`
+2. Navigate to the project directory:
+   `cd SurveryQuill-OA`
+3. Install dependencies:
+   `npm install`
+4. Create a `.env.local` file in the root directory and add your MongoDB connection string:
+   `MONGODB_URI=your_mongodb_connection_string_here`
+5. Run the development server:
+   `npm run dev`
+6. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+- **View Missions**: The home page displays a list of all space missions.
+- **Add Mission**: Click the "Add New Mission" button on the home page to create a new mission.
+- **Edit Mission**: Click the "View/Edit" link on a mission card to edit its details.
+- **Delete Mission**: On the edit page, click the "Delete Mission" button to remove a mission.
 
-To learn more about Next.js, take a look at the following resources:
+## API Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `GET /api/missions`: Fetch all missions
+- `POST /api/missions`: Create a new mission
+- `GET /api/missions/[id]`: Fetch a specific mission
+- `PUT /api/missions/[id]`: Update a specific mission
+- `DELETE /api/missions/[id]`: Delete a specific mission
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

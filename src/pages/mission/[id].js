@@ -84,25 +84,39 @@ export default function MissionDetail() {
   if (!mission) return <p>Mission not found</p>;
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100">
       <Head>
-        <title>{mission.name} - SpaceMission Tracker</title>
+        <title>{mission ? `${mission.name} - SpaceMission Tracker` : 'Loading...'}</title>
       </Head>
 
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">{mission.name}</h1>
-        <Link href="/" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-          Back to Missions
-        </Link>
-      </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-indigo-800">{mission ? mission.name : 'Loading...'}</h1>
+          <Link href="/" className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">
+            Back to Missions
+          </Link>
+        </div>
 
-      <MissionForm onSubmit={handleUpdate} initialData={mission} />
-      <button
-        onClick={handleDelete}
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-      >
-        Delete Mission
-      </button>
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
+          </div>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : !mission ? (
+          <p>Mission not found</p>
+        ) : (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <MissionForm onSubmit={handleUpdate} initialData={mission} />
+            <button
+              onClick={handleDelete}
+              className="mt-6 w-full bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Delete Mission
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

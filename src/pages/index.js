@@ -1,6 +1,4 @@
-
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import MissionList from '../components/MissionList';
@@ -28,25 +26,28 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100">
       <Head>
         <title>SpaceMission Tracker</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">SpaceMission Tracker</h1>
-          <Link href="/add-mission" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+      <main className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-12">
+          <h1 className="text-4xl font-bold text-indigo-800">SpaceMission Tracker</h1>
+          <Link href="/add-mission" className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105">
             Add New Mission
           </Link>
         </div>
         {loading ? (
-          <p>Loading missions...</p>
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-indigo-600"></div>
+          </div>
         ) : (
           <MissionList missions={missions} />
         )}
       </main>
     </div>
+    
   );
 }
