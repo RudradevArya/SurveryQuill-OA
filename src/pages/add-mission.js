@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-// import Link from 'next/link';
+import Link from 'next/link';
 import MissionForm from '../components/MissionForm';
 
 export default function AddMission() {
@@ -40,9 +40,9 @@ export default function AddMission() {
 
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Add New Mission</h1>
-        <div href="/" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+        <Link href="/" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
           Back to Missions
-        </div>
+        </Link>
       </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <MissionForm onSubmit={handleSubmit} />
