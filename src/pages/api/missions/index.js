@@ -12,7 +12,8 @@ export default async function handler(req, res) {
         const missions = await Mission.find({});
         res.status(200).json({ success: true, data: missions });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.error('Error fetching missions:', error);
+        res.status(400).json({ success: false, message: error.message });
       }
       break;
     case 'POST':
@@ -20,11 +21,12 @@ export default async function handler(req, res) {
         const mission = await Mission.create(req.body);
         res.status(201).json({ success: true, data: mission });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.error('Error creating mission:', error);
+        res.status(400).json({ success: false, message: error.message });
       }
       break;
     default:
-      res.status(400).json({ success: false });
+      res.status(400).json({ success: false, message: 'Invalid method' });
       break;
   }
 }
