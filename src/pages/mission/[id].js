@@ -16,7 +16,7 @@ export default function MissionDetail() {
     if (id) {
       fetchMission();
     }
-  }, [id]);
+  });
 
   const fetchMission = async () => {
     try {
