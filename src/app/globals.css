@@ -3,24 +3,6 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-:root {
   --primary-color: #4f46e5;
   --secondary-color: #818cf8;
   --background-color: #f3f4f6;
@@ -34,105 +16,56 @@ body {
   min-height: 100vh;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-}
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
+  .header {
+    @apply flex justify-between items-center mb-8;
+  }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--primary-color);
-}
+  .title {
+    @apply text-4xl font-bold text-primary;
+  }
 
-.button {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-}
+  .button {
+    @apply bg-primary text-white px-4 py-2 rounded-full hover:bg-secondary transition duration-300 ease-in-out transform hover:scale-105;
+  }
 
-.button:hover {
-  background-color: var(--secondary-color);
-}
+  .mission-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
 
-.mission-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
+  .mission-card {
+    @apply bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:scale-105;
+  }
 
-.mission-card {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  transition: transform 0.3s ease;
-}
+  .mission-title {
+    @apply text-2xl font-bold text-primary mb-2;
+  }
 
-.mission-card:hover {
-  transform: scale(1.05);
-}
+  .mission-detail {
+    @apply text-gray-600 mb-1;
+  }
 
-.mission-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-}
+  .mission-link {
+    @apply text-primary font-medium hover:underline;
+  }
 
-.mission-detail {
-  color: #4b5563;
-  margin-bottom: 0.25rem;
-}
+  .form-group {
+    @apply mb-4;
+  }
 
-.mission-link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-}
+  .form-label {
+    @apply block mb-2 font-medium;
+  }
 
-.mission-link:hover {
-  text-decoration: underline;
-}
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary;
+  }
 
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.25rem;
-}
-
-.form-submit {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.form-submit:hover {
-  background-color: var(--secondary-color);
+  .form-submit {
+    @apply bg-primary text-white px-4 py-2 rounded-md hover:bg-secondary transition duration-300 ease-in-out;
+  }
 }

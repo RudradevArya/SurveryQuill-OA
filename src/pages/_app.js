@@ -1,3 +1,4 @@
+
 import '../app/globals.css'
 
 function MyApp({ Component, pageProps }) {
