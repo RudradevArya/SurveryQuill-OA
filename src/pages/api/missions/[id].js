@@ -1,56 +1,100 @@
-import dbConnect from '../../../utils/dbConnect';
-import Mission from '../../../models/Mission';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import MissionForm from '../../components/MissionForm';
 
-export default async function handler(req, res) {
-  const {
-    query: { id },
-    method,
-  } = req;
+export default function MissionDetail() {
+  const router = useRouter();
+  const { id } = router.query;
+  const [mission, setMission] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  await dbConnect();
+  useEffect(() => {
+    if (id) {
+      fetchMission();
+    }
+  }, [id]);
 
-  switch (method) {
-    case 'GET':
-      try {
-        const mission = await Mission.findById(id);
-        if (!mission) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: mission });
-      } catch (error) {
-        res.status(400).json({ success: false });
+  const fetchMission = async () => {
+    try {
+      const res = await fetch(`/api/missions/${id}`);
+      const data = await res.json();
+      if (data.success) {
+        setMission(data.data);
+      } else {
+        setError('Failed to fetch mission');
       }
-      break;
+    } catch (error) {
+      console.error('Error fetching mission:', error);
+      setError('An error occurred while fetching the mission');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    case 'PUT':
+  const handleUpdate = async (formData) => {
+    try {
+      const res = await fetch(`/api/missions/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        router.push('/');
+      } else {
+        setError('Failed to update mission');
+      }
+    } catch (error) {
+      console.error('Error updating mission:', error);
+      setError('An error occurred while updating the mission');
+    }
+  };
+
+  const handleDelete = async () => {
+    if (confirm('Are you sure you want to delete this mission?')) {
       try {
-        const mission = await Mission.findByIdAndUpdate(id, req.body, {
-          new: true,
-          runValidators: true,
+        const res = await fetch(`/api/missions/${id}`, {
+          method: 'DELETE',
         });
-        if (!mission) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: mission });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
 
-    case 'DELETE':
-      try {
-        const deletedMission = await Mission.deleteOne({ _id: id });
-        if (!deletedMission) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: {} });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
+        const data = await res.json();
 
-    default:
-      res.status(400).json({ success: false });
-      break;
-  }
+        if (data.success) {
+          router.push('/');
+        } else {
+          setError('Failed to delete mission');
+        }
+      } catch (error) {
+        console.error('Error deleting mission:', error);
+        setError('An error occurred while deleting the mission');
+      }
+    }
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+  if (!mission) return <p>Mission not found</p>;
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Head>
+        <title>{mission.name} - SpaceMission Tracker</title>
+      </Head>
+
+      <h1 className="text-3xl font-bold mb-8">{mission.name}</h1>
+      <MissionForm onSubmit={handleUpdate} initialData={mission} />
+      <button
+        onClick={handleDelete}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Delete Mission
+      </button>
+    </div>
+  );
 }

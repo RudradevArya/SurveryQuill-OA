@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -12,8 +13,8 @@ const MissionList = ({ missions }) => {
             Launch Date: {new Date(mission.launchDate).toLocaleDateString()}
           </p>
           <p className="text-gray-600 mb-2">Status: {mission.status}</p>
-          <Link href={`/mission/${mission._id}`}>
-            <a className="text-blue-500 hover:underline">View Details</a>
+          <Link href={`/mission/${mission._id}`} className="text-blue-500 hover:underline">
+            View/Edit
           </Link>
         </div>
       ))}
