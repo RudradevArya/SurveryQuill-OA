@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Link from 'next/link';
 import MissionForm from '../components/MissionForm';
 
 export default function AddMission() {
@@ -37,7 +38,12 @@ export default function AddMission() {
         <title>Add New Mission - SpaceMission Tracker</title>
       </Head>
 
-      <h1 className="text-3xl font-bold mb-8">Add New Mission</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Add New Mission</h1>
+        <Link href="/" className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+          Back to Missions
+        </Link>
+      </div>
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <MissionForm onSubmit={handleSubmit} />
     </div>

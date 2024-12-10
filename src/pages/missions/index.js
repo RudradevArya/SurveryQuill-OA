@@ -1,5 +1,5 @@
-import dbConnect from '../../../utils/dbConnect';
-import Mission from '../../../models/Mission';
+import dbConnect from '../../utils/dbConnect';
+import Mission from '../../models/Mission';
 
 export default async function handler(req, res) {
   await dbConnect();
